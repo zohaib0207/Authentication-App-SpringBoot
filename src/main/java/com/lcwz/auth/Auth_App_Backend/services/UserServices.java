@@ -23,4 +23,6 @@ public interface UserServices {
 
     //get all Users
     Iterable<UserDto> getAllUsers();
+
+    //user service se related methods are put here
 }
