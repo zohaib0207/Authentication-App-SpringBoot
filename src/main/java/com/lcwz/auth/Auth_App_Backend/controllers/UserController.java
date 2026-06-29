@@ -14,6 +14,7 @@ import com.lcwz.auth.Auth_App_Backend.services.UserServices;
 @AllArgsConstructor
 public class UserController {
     private final UserServices userService;
+
     //A method that creates user at POST request - API to create user
     @PostMapping
     public ResponseEntity<UserDto>createUser(@RequestBody UserDto userDto){
@@ -32,4 +33,23 @@ public class UserController {
     public ResponseEntity<UserDto> getUserById(@PathVariable String userId) {
         return ResponseEntity.ok(userService.getUserById(userId));
     }
+
+    //Get users by Email
+    @GetMapping("/email/{email}")
+    public ResponseEntity<UserDto> getUserByEmail(@PathVariable String email) {
+        return ResponseEntity.ok(userService.getUserByEmail(email));
+    }
+
+    //API to update user by id
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable String userId) {
+        return ResponseEntity.ok(userService.updateUser(userDto, userId));
+    }
+
+    //API to delete user by id
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
+        userService.deleteUser(userId);
+        return ResponseEntity.noContent().build();
+    }    
 }

@@ -3,7 +3,10 @@ package com.lcwz.auth.Auth_App_Backend.services;
 import com.lcwz.auth.Auth_App_Backend.entities.Provider;
 import com.lcwz.auth.Auth_App_Backend.entities.User;
 import com.lcwz.auth.Auth_App_Backend.dtos.UserDto;
+import com.lcwz.auth.Auth_App_Backend.exceptions.ResourceNotFoundException;
+import com.lcwz.auth.Auth_App_Backend.helpers.UserHelper;
 import com.lcwz.auth.Auth_App_Backend.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,7 @@ public class UserServiceImpl implements UserServices {
     private final ModelMapper modelMapper;
 
     @Override
+    @Transactional
     public UserDto createUser(UserDto userDto) {
         if (userDto.getEmail() == null || userDto.getEmail().isBlank()) {
             throw new IllegalArgumentException("Email cannot be null or empty");
@@ -40,16 +44,45 @@ public class UserServiceImpl implements UserServices {
 
     @Override
     public UserDto getUserByEmail(String email) {
-        return null;
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User not found with given Email ID"));
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override
     public UserDto updateUser(UserDto userDto, String userId) {
-        return null;
+    UUID user_id=UserHelper.parseUUID(userId); //validate UUID and convert to string by helper
+        User existingUser = userRepository.findById(user_id).orElseThrow(() -> new ResourceNotFoundException("User not found with given ID"));
+        // We are not going to change email id for this project.
+        if (userDto.getName() != null)
+            existingUser.setName(userDto.getName());
+
+        if (userDto.getImage() != null)
+            existingUser.setImage(userDto.getImage());
+
+        if (userDto.getProvider() != null)
+            existingUser.setProvider(userDto.getProvider());
+
+        // TODO: Change password updation
+
+        if (userDto.getPassword() != null)
+            existingUser.setPassword(userDto.getPassword());
+
+        existingUser.setEnable(userDto.isEnable());
+
+        User updatedUser = userRepository.save(existingUser);
+        return modelMapper.map(updatedUser, UserDto.class);
+
+
     }
 
     @Override
+    @Transactional //so that all the operations are performed and no partial operation is performed
     public void deleteUser(String userId) {
+        UUID uId= UserHelper.parseUUID(userId); // Validate UUID format and convert to string
+        //now find the user by id
+        User user=userRepository.findById(uId).orElseThrow(() -> new ResourceNotFoundException("User not found with given ID"));
+        //now delete the user
+        userRepository.delete(user);
 
     }
 
@@ -67,8 +100,9 @@ public class UserServiceImpl implements UserServices {
 
     }
 
-    //Iterable use karne se we can pass lits and all
+    //Iterable use karne se we can pass lists and all
     @Override
+    @Transactional
     public Iterable<UserDto> getAllUsers() {
         return userRepository.findAll().stream()
                 .map(user -> modelMapper.map(user, UserDto.class))
