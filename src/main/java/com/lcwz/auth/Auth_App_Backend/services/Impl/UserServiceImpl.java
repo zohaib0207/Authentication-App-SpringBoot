@@ -1,4 +1,4 @@
-package com.lcwz.auth.Auth_App_Backend.services;
+package com.lcwz.auth.Auth_App_Backend.services.Impl;
 
 import com.lcwz.auth.Auth_App_Backend.entities.Provider;
 import com.lcwz.auth.Auth_App_Backend.entities.User;
@@ -6,6 +6,7 @@ import com.lcwz.auth.Auth_App_Backend.dtos.UserDto;
 import com.lcwz.auth.Auth_App_Backend.exceptions.ResourceNotFoundException;
 import com.lcwz.auth.Auth_App_Backend.helpers.UserHelper;
 import com.lcwz.auth.Auth_App_Backend.repositories.UserRepository;
+import com.lcwz.auth.Auth_App_Backend.services.UserServices;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
