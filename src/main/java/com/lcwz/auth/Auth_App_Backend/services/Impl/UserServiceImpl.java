@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserServices {
     UUID user_id=UserHelper.parseUUID(userId); //validate UUID and convert to string by helper
         User existingUser = userRepository.findById(user_id).orElseThrow(() -> new ResourceNotFoundException("User not found with given ID"));
         // We are not going to change email id for this project.
+        //Mentioned below are the fields that can be updated by user
         if (userDto.getName() != null)
             existingUser.setName(userDto.getName());
 
