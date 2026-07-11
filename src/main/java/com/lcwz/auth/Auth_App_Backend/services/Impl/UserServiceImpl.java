@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserServices {
         if (userDto.getProvider() != null)
             existingUser.setProvider(userDto.getProvider());
 
-        // TODO: Change password updation
+        // TODO: Change password updation request to be handled 
 
         if (userDto.getPassword() != null)
             existingUser.setPassword(userDto.getPassword());
