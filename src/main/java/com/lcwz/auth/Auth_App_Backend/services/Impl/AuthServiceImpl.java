@@ -16,7 +16,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public UserDto registerUser(UserDto userDto) {
-        //any other logic like verifying email , role assignment and all can be done over here , here create user is just used to create user in database and for making sake only
+        //any other logic like verifying email , role assignment and all can be done over here , like currently create user is just being made for making the user as a dummy user, we later can fetch data from actual DB
 
         //Before giving the password to user DTO we will encode the password and then pass the details
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword())); //now the data is stored in encoded format

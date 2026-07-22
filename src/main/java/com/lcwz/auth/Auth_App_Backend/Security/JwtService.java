@@ -107,7 +107,7 @@ public class JwtService {
         return UUID.fromString(c.getSubject());
     }
 
-    //to get the jti from the token of refresh agar uski id chahiye toh
+    //to get the jwt from the token of refresh agar uski id chahiye toh
 
     public String getJtiFromToken(String token){
         Claims c=parse(token).getPayload();

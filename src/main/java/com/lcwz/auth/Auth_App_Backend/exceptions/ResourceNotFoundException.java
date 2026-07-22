@@ -11,4 +11,6 @@ public class ResourceNotFoundException extends RuntimeException {
 
         super("Resource not found");
     }
+
+    //Need to add user not found exception as a error to be caught in this? - airport commits can be ignored
 }

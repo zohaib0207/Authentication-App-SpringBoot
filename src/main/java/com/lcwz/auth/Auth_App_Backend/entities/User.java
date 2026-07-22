@@ -36,7 +36,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Provider provider=Provider.LOCAL; //because user can use any medium to login right
 
-    @ManyToMany(fetch = FetchType.EAGER) //EAGER Basically is whenever we fetch Users , the role is automatically fetched as well
+    @ManyToMany(fetch = FetchType.EAGER) //EAGER Basically is whenever we fetch Users , the role is automatically fetched as well so there is no manual injection of user needed
     //Now we have to create a join table to connect the user and role table
     @JoinTable(name="user_roles",
             joinColumns = @JoinColumn(name="user_id"), inverseJoinColumns = @JoinColumn(name="role_id"))
