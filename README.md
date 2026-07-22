@@ -1,100 +1,337 @@
-# Authentication App - Spring Boot
+# 🔐 Authentication App - Spring Boot
 
-🚧 Work in Progress – Currently implementing the Service Layer and User Management features.
-A backend authentication and user management application built using Spring Boot, Spring Data JPA, Hibernate, and MySQL.
+A production-style backend authentication and user management application built using **Spring Boot**, **Spring Security**, **JWT Authentication**, **Spring Data JPA**, **Hibernate**, and **MySQL**.
 
-## Current Progress
+This project is being developed while learning modern backend development practices and focuses on building secure, scalable REST APIs following layered architecture and industry standards.
 
-### Implemented
+> 🚧 **Status:** Active Development
 
-- Spring Boot project setup
-- MySQL database integration
-- Hibernate & JPA configuration
-- User Entity creation
-- Role Entity creation
-- Provider Enum (LOCAL, GOOGLE, FACEBOOK, GITHUB)
-- Entity Relationships (User ↔ Role)
-- Repository Layer
-  - UserRepository
-  - Custom query methods
-- DTO Layer
-  - UserDto
-  - RoleDto
-- Service Layer Structure
-  - UserServices interface
-  - UserServiceImpl implementation skeleton
-- Automatic timestamp management using JPA lifecycle callbacks
-  - @PrePersist
-  - @PreUpdate
+---
 
-## Tech Stack
+# ✨ Features Implemented
 
-- Java
-- Spring Boot
+## Project Setup
+
+- Spring Boot project initialization
+- Maven build system
+- Layered Architecture
+- Environment-based configuration (YAML)
+
+---
+
+## User Management
+
+- User Entity
+- Role Entity
+- Provider Enum
+  - LOCAL
+  - GOOGLE
+  - FACEBOOK
+  - GITHUB
+- UUID-based Primary Keys
+- Automatic Timestamp Management
+    - `@PrePersist`
+    - `@PreUpdate`
+- Many-to-Many User ↔ Role relationship
+
+---
+
+## Database Layer
+
 - Spring Data JPA
-- Hibernate
-- MySQL
-- Maven
-- Lombok
+- Hibernate ORM
+- MySQL Integration
+- Repository Layer
+- Custom Query Methods
 
-## Architecture
+---
 
-```
-Controller
-    ↓
-Service
-    ↓
-Repository
-    ↓
-Database
-```
+## DTO Layer
 
-## Database Design
+- UserDto
+- RoleDto
+- Request & Response DTOs
+- DTO Validation
 
-### User
+---
 
-- UUID id
-- email
-- name
-- password
-- image
-- provider
-- createdAt
-- updatedAt
-- roles
+## Service Layer
 
-### Role
+- User Service
+- Authentication Service
+- Clean Service Interfaces
+- Business Logic Separation
 
-- UUID id
-- name
+---
 
-### Relationship
+## REST APIs
 
-- User ↔ Role (Many-to-Many)
-
-## Upcoming Features
+Implemented APIs for:
 
 - User Registration
 - User Login
-- DTO ↔ Entity Mapping
-- Validation
-- Exception Handling
-- Password Encryption
-- Spring Security
-- JWT Authentication
-- Role-Based Authorization
-- REST APIs
-- API Documentation
-- Deployment
+- User CRUD Operations
+- Role Management
 
-## Learning Goal
+---
 
-This project is being developed to gain a deep understanding of:
+## Validation
 
+- Bean Validation
+- Request Validation
+- Custom Validation Messages
+
+---
+
+## Exception Handling
+
+- Global Exception Handler
+- Custom Exceptions
+- Standardized Error Responses
+
+---
+
+## Authentication & Security
+
+### Spring Security
+
+- Custom Security Configuration
+- Security Filter Chain
+- Password Encoding using BCrypt
+- Stateless Authentication
+
+### JWT Authentication
+
+- JWT Generation
+- Access Token
+- Refresh Token
+- JWT Validation
+- JWT Parsing
+- Token Type Validation
+- User Authentication using JWT Filter
+- SecurityContext Integration
+
+---
+
+## Current Authentication Flow
+
+```text
+Client
+    │
+    │ Login Request
+    ▼
+Authentication Service
+    │
+    ▼
+JWT Generated
+    │
+    ▼
+Client Stores Access Token
+    │
+    ▼
+Subsequent Requests
+    │
+Authorization: Bearer <JWT>
+    ▼
+JwtAuthenticationFilter
+    │
+Validate Token
+    │
+Extract User
+    │
+Load Authorities
+    │
+SecurityContext
+    ▼
+Controller
+```
+
+---
+
+# 🏗️ Project Architecture
+
+```text
+Controller
+      │
+      ▼
+Service
+      │
+      ▼
+Repository
+      │
+      ▼
+Database
+```
+
+Authentication Layer
+
+```text
+Client
+      │
+      ▼
+Security Filter Chain
+      │
+      ▼
+JwtAuthenticationFilter
+      │
+      ▼
+SecurityContext
+      │
+      ▼
+Controller
+```
+
+---
+
+# 🛠 Tech Stack
+
+### Backend
+
+- Java 21
 - Spring Boot
-- JPA & Hibernate
-- Layered Architecture
-- Authentication & Authorization
 - Spring Security
-- JWT
-- Production-style Backend Development
+- Spring Data JPA
+- Hibernate
+
+### Database
+
+- MySQL
+
+### Authentication
+
+- JWT (JSON Web Tokens)
+- BCrypt Password Encoder
+
+### Build Tool
+
+- Maven
+
+### Utilities
+
+- Lombok
+
+---
+
+# 📂 Project Structure
+
+```text
+src
+ ├── config
+ ├── controllers
+ ├── dtos
+ ├── entities
+ ├── enums
+ ├── exceptions
+ ├── helpers
+ ├── repositories
+ ├── security
+ ├── services
+ └── AuthApplication
+```
+
+---
+
+# 🗄 Database Design
+
+## User
+
+- UUID id
+- String name
+- String email
+- String password
+- String image
+- Provider provider
+- LocalDateTime createdAt
+- LocalDateTime updatedAt
+- List<Role> roles
+
+---
+
+## Role
+
+- UUID id
+- String name
+
+---
+
+## Relationship
+
+```text
+User
+   ▲
+   │ Many-to-Many
+   ▼
+Role
+```
+
+---
+
+# 🚀 Upcoming Features
+
+- Email Verification
+- Password Reset
+- Refresh Token Rotation
+- Logout Endpoint
+- Google OAuth Login
+- Swagger / OpenAPI Documentation
+- Unit Testing (JUnit + Mockito)
+- Docker Support
+- CI/CD Pipeline
+- Production Deployment
+- Role-Based Authorization
+- Method-Level Security
+- API Rate Limiting
+
+---
+
+# 📚 Concepts Covered
+
+This project helped me understand:
+
+- Layered Architecture
+- RESTful API Development
+- DTO Pattern
+- Spring Data JPA
+- Hibernate Relationships
+- Validation
+- Global Exception Handling
+- Spring Security
+- Authentication vs Authorization
+- JWT Authentication
+- Security Filter Chain
+- SecurityContext
+- BCrypt Password Encoding
+- Repository Pattern
+- Service Layer Design
+
+---
+
+# 🎯 Purpose
+
+The goal of this project is to build a production-style authentication backend while learning the internal working of Spring Boot, Spring Security, and JWT instead of simply following tutorials.
+
+The project is continuously being improved by adding new security features, production-ready practices, and backend best practices.
+
+---
+
+## ⭐ Current Status
+
+✔ User Management
+
+✔ Spring Security
+
+✔ JWT Authentication
+
+✔ Validation
+
+✔ Exception Handling
+
+✔ Layered Architecture
+
+🚧 Refresh Token Improvements
+
+🚧 Swagger Documentation
+
+🚧 Testing
+
+🚧 Docker & Deployment
